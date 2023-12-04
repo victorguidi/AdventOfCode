@@ -2,6 +2,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+// #include <regex.h> // Maybe a regex to match any of the values for numbers?
+
+typedef enum {
+  one = 1,
+  two = 2,
+  three = 3,
+  four = 4,
+  five = 5,
+  six = 6,
+  seven = 7,
+  eight = 8,
+  nine = 9
+} Numbers;
+
+bool isStringNumber(char *line)
+{
+  for(int i = 0; i <= 5; i++) {
+    printf("%c\n", line[i]);
+  }
+  return true;
+}
 
 int SumValuesForLine(char line[1024]) {
   int total = 0;
@@ -9,6 +30,7 @@ int SumValuesForLine(char line[1024]) {
   int counter = 0;
 
   for (int i = 0; i < strlen(line); i++) {
+    // if(line[i] == 'o') isStringNumber(&line[i]);
     if (isdigit(line[i])) {
       if (counter == 0) values[0] = line[i];
       else values[1] = line[i];
@@ -25,7 +47,7 @@ int SumValuesForLine(char line[1024]) {
         exit(EXIT_FAILURE);
       }
 
-      printf("%c%c\n", values[0], values[1]);
+      // printf("%c%c\n", values[0], values[1]);
       sprintf(v, "%c%c", values[0], values[1]);
 
       total += strtol(v, NULL, 10);
@@ -43,7 +65,7 @@ int main() {
 
   int result;
 
-  fp = fopen("file.txt", "r");
+  fp = fopen("test.txt", "r");
   if (fp == NULL) {
       printf("Error opening file\n");
       return 1;
