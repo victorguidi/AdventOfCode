@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-// #include <regex.h> // Maybe a regex to match any of the values for numbers?
 
 typedef enum {
+  no_match = 0,
   one = 1,
   two = 2,
   three = 3,
@@ -16,15 +16,29 @@ typedef enum {
   nine = 9
 } Numbers;
 
-bool isStringNumber(char *line)
+Numbers isStringNumber(char *line)
 {
-
   // TODO: Check if there is this value in the string
-  char number[10][6] = {"one", "two", "three", "four", "five", "six", "seven","eight", "nine"};
-  for(int i = 0; i <= 5; i++) {
-    printf("%c\n", line[i]);
+  char numbers[10][6] = {"one", "two", "three", "four", "five", "six", "seven","eight", "nine"};
+  for(int i = 0; i <= 9; i++) 
+  {
+    char *substring = strstr(line, numbers[i]);
+    // FIX: This is not working
+    while(substring != NULL)
+    {
+      if (substring == line || !isalpha(*(substring - 1)))
+      {
+        size_t length = strlen(numbers[i]);
+        if (substring[length] == strlen(numbers[i]))
+        {
+          printf("%d -> substring, %d -> numbers", substring[length], strlen(numbers[i]));
+          return (Numbers)(i + 1);
+        }
+      }
+      substring = strstr(substring + 1, numbers[i]);
+    }
   }
-  return true;
+  return no_match;
 }
 
 int SumValuesForLine(char line[1024]) {
@@ -33,7 +47,7 @@ int SumValuesForLine(char line[1024]) {
   int counter = 0;
 
   for (int i = 0; i < strlen(line); i++) {
-    // if(line[i] == 'o') isStringNumber(&line[i]);
+    Numbers result = isStringNumber(&line[i]);
     if (isdigit(line[i])) {
       if (counter == 0) values[0] = line[i];
       else values[1] = line[i];
