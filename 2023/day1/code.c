@@ -18,6 +18,9 @@ typedef enum {
 
 bool isStringNumber(char *line)
 {
+
+  // TODO: Check if there is this value in the string
+  char number[10][6] = {"one", "two", "three", "four", "five", "six", "seven","eight", "nine"};
   for(int i = 0; i <= 5; i++) {
     printf("%c\n", line[i]);
   }
